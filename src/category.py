@@ -18,6 +18,8 @@ class Category:
         )
 
     def __repr__(self):
-        return (
-            f"Category: {self.name} - {self.id} - {self.description} - {self.is_active}"
-        )
+        return self.__str__()
+    
+    def update_category(self, name: str, description: str):
+        self.name = name
+        self.description = description

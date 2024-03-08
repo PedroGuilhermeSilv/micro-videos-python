@@ -32,3 +32,12 @@ class TestCategory:
         category = Category("name")
         assert category.id is not None
         assert isinstance(category.id, uuid.UUID)
+
+
+class TestUpdateCategory():
+    def test_update_category(self):
+        category = Category(name='Série', description='Séries de TV')
+        category.update_category(name='Filme', description='Filme de TV')
+
+        assert category.name == 'Filme'
+        assert category.description == 'Filme de TV'
