@@ -9,19 +9,15 @@
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
     "ruff.lint.run": "onSave",
-    "python.autoComplete.extraPaths": [
-        "${workspaceFolder}/__pypackages__/3.11/lib",
-    ],
-    "python.analysis.extraPaths": [
-        "${workspaceFolder}/__pypackages__/3.11/lib",
-    ],
     "python.testing.pytestArgs": [
-        "src",
-        "--ignore",
-        "__pypackages__"
+        "src"
     ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
+    "sourcery.token": "user_7aZw___m7bDwRK1J1GBgBEsVu0HJ9Kn62iE82GFDab28cYlk1GZpr5gPo2k",
+    "python.analysis.extraPaths": [
+        "./__pypackages__/3.11/lib"
+    ],
 
 
 
