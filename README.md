@@ -9,7 +9,8 @@ Administração de Catálogo - Codeflix - Python
 - [x] Caso a propiedade isActive não seja informada, deverá receber como default o valor true.
 - [x] Test __str__
 - [x] Tes __repr__
-- [ ] Deve permitir a alteração da categoria informando o nome e a descrição
+- [x] Deve permitir a alteração da categoria informando o nome e a descrição
 - [ ] Deve permitir ativar e desativar uma categoria
+
 
 

@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     build: .
-    container_name: micro-videos-python-app
+    container_name: micro-videos-python-app-3
     volumes:
       - ./.docker/zsh/powerlevel10k/.p10k.zsh:/home/python/.p10k.zsh:delegated
       - ./.docker/zsh/history:/home/python/zsh:delegated

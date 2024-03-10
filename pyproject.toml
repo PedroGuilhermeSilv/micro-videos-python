@@ -1,17 +1,26 @@
 [project]
-name = "app"
+name = "micro-videos-python"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
     {name = "guilherme", email = "vinespedro55@gmail.com"},
 ]
 dependencies = [
-    "pytest>=8.0.2",
+    "pytest>=8.1.1",
 ]
-requires-python = "==3.11.*"
+requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 
 
 [tool.pdm]
-distribution = false
+distribution = true
+
+[tool.pdm.dev-dependencies]
+pytest = [
+    "pytest-cov>=4.1.0",
+]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
