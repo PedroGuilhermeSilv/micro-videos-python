@@ -9,9 +9,7 @@
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "ruff.lint.run": "onSave",
-  "python.testing.pytestArgs": [
-    "src"
-  ],
+  "python.testing.cwd": "./src",
   "python.autoComplete.extraPaths": [
     "${workspaceFolder}/__pypackages__/3.11/lib"
   ],
@@ -20,5 +18,6 @@
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-  "sourcery.token": "user_7aZw___m7bDwRK1J1GBgBEsVu0HJ9Kn62iE82GFDab28cYlk1GZpr5gPo2k"
+  "sourcery.token": "user_7aZw___m7bDwRK1J1GBgBEsVu0HJ9Kn62iE82GFDab28cYlk1GZpr5gPo2k",
+
 }
