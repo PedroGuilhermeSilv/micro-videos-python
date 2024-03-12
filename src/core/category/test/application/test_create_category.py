@@ -5,7 +5,6 @@ from src.core.category.infra.in_memory_category import InMemoryCategoryRepositor
 
 from src.core.category.application.create_category import (
     CategoryCreateRequest,
-    CategoryCreateResponse,
     InvalidCategoryData,
 )
 from src.core.category.application.create_category import CreateCategory
@@ -26,7 +25,7 @@ class TestCreateCategory:
         assert mock_repository.save.called
 
     def test_create_category_with_invalid_data(self):
-        use_case = CreateCategory(repository= MagicMock(InMemoryCategoryRepository))
+        use_case = CreateCategory(repository=MagicMock(InMemoryCategoryRepository))
         with pytest.raises(InvalidCategoryData, match="Name is required") as exc_info:
             use_case.execute(request=CategoryCreateRequest(name=""))
         assert exc_info.type == InvalidCategoryData
