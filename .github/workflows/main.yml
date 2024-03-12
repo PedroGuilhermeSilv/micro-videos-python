@@ -23,6 +23,9 @@ jobs:
 
       - name: Run Lint Flake8
         run: pdm run flake8
+      
+      - name: Set PYTHONPATH
+        run: echo PYTHONPATH=$PYTHONPATH:$(pwd)/src >> $GITHUB_ENV
 
       - name: Run Pytest
         run: pdm run pytest ./src
