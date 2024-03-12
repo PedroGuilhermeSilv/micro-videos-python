@@ -1,5 +1,5 @@
 import uuid
-from category import Category
+from src.core.category.domain.category import Category
 import pytest
 
 
@@ -19,7 +19,9 @@ class TestCategory:
         assert category.is_active is True
 
     def test_create_category_with_all_values(self):
-        category = Category("name", "1", "description", True)
+        category = Category(
+            name="name", id="1", description="description", is_active=True
+        )
         assert category.name == "name"
         assert category.id == "1"
         assert category.description == "description"
@@ -30,11 +32,15 @@ class TestCategory:
             Category("")
 
     def test_str_is_correct(self):
-        category = Category("name", "1", "description", True)
+        category = Category(
+            name="name", id="1", description="description", is_active=True
+        )
         assert str(category) == "Category: name - 1 - description - True"
 
     def test_repr_is_correct(self):
-        category = Category("name", "1", "description", True)
+        category = Category(
+            name="name", id="1", description="description", is_active=True
+        )
         assert repr(category) == "Category: name - 1 - description - True"
 
     def test_uuid_is_generated(self):

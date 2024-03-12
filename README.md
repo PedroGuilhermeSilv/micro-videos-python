@@ -13,4 +13,5 @@ Administração de Catálogo - Codeflix - Python
 - [ ] Deve permitir ativar e desativar uma categoria
 
 
-
+## TDD
+- Trate as exeções de acordo com seu domínio. Não faça um teste que interaga diramente com diferentes camadas.
