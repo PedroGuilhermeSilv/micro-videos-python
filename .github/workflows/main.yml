@@ -25,4 +25,4 @@ jobs:
         run: pdm run flake8
 
       - name: Run Pytest
-        run: pdm run pytest
+        run: pdm run pytest ./src
