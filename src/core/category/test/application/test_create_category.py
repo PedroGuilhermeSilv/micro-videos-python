@@ -1,22 +1,32 @@
+from unittest.mock import MagicMock
 from uuid import UUID
 import pytest
+from src.core.category.infra.in_memory_category import InMemoryCategoryRepository
 
 from src.core.category.application.create_category import (
+    CategoryCreateRequest,
+    CategoryCreateResponse,
     InvalidCategoryData,
-    create_category,
 )
+from src.core.category.application.create_category import CreateCategory
 
 
 class TestCreateCategory:
     def test_create_category_with_valid_data(self):
-        category_id = create_category(
-            name="name", description="description", is_active=True
+        mock_repository = MagicMock(InMemoryCategoryRepository)
+        use_case = CreateCategory(repository=mock_repository)
+        category_id = use_case.execute(
+            request=CategoryCreateRequest(
+                name="name", description="description", is_active=True
+            )
         )
 
         assert category_id is not None
         assert isinstance(category_id, UUID)
+        assert mock_repository.save.called
 
     def test_create_category_with_invalid_data(self):
+        use_case = CreateCategory(repository= MagicMock(InMemoryCategoryRepository))
         with pytest.raises(InvalidCategoryData, match="Name is required") as exc_info:
-            create_category(name="")
+            use_case.execute(request=CategoryCreateRequest(name=""))
         assert exc_info.type == InvalidCategoryData
