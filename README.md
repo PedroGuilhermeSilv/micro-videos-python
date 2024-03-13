@@ -15,3 +15,6 @@ Administração de Catálogo - Codeflix - Python
 
 ## TDD
 - Trate as exeções de acordo com seu domínio. Não faça um teste que interaga diramente com diferentes camadas.
+
+## Inversão de Dependência:
+- Módulos de maior nível não podem depender de módulos de menor nível. Deve-se criar interfaces que façam tanto o módulo de maior nível quanto de menor dependerem dele.

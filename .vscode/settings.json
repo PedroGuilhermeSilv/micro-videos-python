@@ -13,11 +13,15 @@
     "${workspaceFolder}/__pypackages__/3.11/lib"
   ],
   "python.analysis.extraPaths": [
-    "${workspaceFolder}/__pypackages__/3.11/lib"
+    "${workspaceFolder}/__pypackages__/3.11/lib",
+
+  ],
+  "python.testing.pytestArgs": [
+    "src"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   "sourcery.token": "user_7aZw___m7bDwRK1J1GBgBEsVu0HJ9Kn62iE82GFDab28cYlk1GZpr5gPo2k",
-  "python.analysis.autoSearchPaths": true,
+
 
 }
