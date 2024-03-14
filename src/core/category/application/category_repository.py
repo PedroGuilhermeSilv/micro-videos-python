@@ -11,3 +11,7 @@ class CategoryRepository(ABC):
     @abstractmethod
     def get_by_id(self, id) -> Category | None:
         raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, category) -> None:
+        raise NotImplementedError

@@ -52,20 +52,20 @@ class TestCategory:
 class TestUpdateCategory:
     def test_update_category_with_name_and_description(self):
         category = Category(name="Série", description="Séries de TV")
-        category.update_category(name="Filme", description="Filme de TV")
+        category.update_category(name="movie", description="movie de TV")
 
-        assert category.name == "Filme"
-        assert category.description == "Filme de TV"
+        assert category.name == "movie"
+        assert category.description == "movie de TV"
 
     def test_update_category_with_name_invalid(self):
         category = Category(name="Série", description="Séries de TV")
         with pytest.raises(ValueError, match="Name must have less than 255 characters"):
-            category.update_category(name="a" * 256, description="Filme de TV")
+            category.update_category(name="a" * 256, description="movie de TV")
 
     def test_update_category_with_name_empty(self):
         category = Category(name="Série", description="Séries de TV")
         with pytest.raises(ValueError, match="Name is required"):
-            category.update_category(name="", description="Filme de TV")
+            category.update_category(name="", description="movie de TV")
 
 
 class TestActiveCategory:
