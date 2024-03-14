@@ -22,8 +22,8 @@
 - [x] #A2398
 - [x] #A2399
 - [x] #A2400
-- [ ] #A2401
-- [ ] #A2402
+- [x] #A2401
+- [x] #A2402
 - [ ] #A2403
 - [ ] #A2404
 - [ ] #A2405
@@ -63,3 +63,19 @@
 - [ ] #A2439
 - [ ] #A2440
 - [ ] #A2441
+
+
+# Anotações:
+
+## Pesquisar
+- Verificar a diferença de MagickMock para create_autospec
+
+
+## TDD
+- Trate as exeções de acordo com seu domínio. Não faça um teste que interaga diramente com diferentes camadas.
+
+## Inversão de Dependência:
+- Módulos de maior nível não podem depender de módulos de menor nível. Deve-se criar interfaces que façam tanto o módulo de maior nível quanto de menor dependerem dele.
+
+## DTO:
+- Sempre que puder utilizar dto de entrada e de saída.
