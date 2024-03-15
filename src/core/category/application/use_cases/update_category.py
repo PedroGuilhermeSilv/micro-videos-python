@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from uuid import UUID
-from core.category.domain.category import Category
 from src.core.category.application.use_cases.exceptions import CategoryNotFound
 from src.core.category.application.category_repository import CategoryRepository
 
@@ -10,6 +9,7 @@ class CategoryUpdateRequest:
     id: UUID
     name: str | None = None
     description: str | None = None
+    is_active: bool | None = None
 
 
 class UpdateCategory:
@@ -18,16 +18,23 @@ class UpdateCategory:
 
     def execute(self, request: CategoryUpdateRequest) -> None:
         category = self.repository.get_by_id(request.id)
-        current_name = category.name
-        currrent_description = category.description
         if category is None:
             raise CategoryNotFound(f"Category {request.id} not found")
 
+        current_name = category.name
         if request.name is not None:
             current_name = request.name
+        current_description = category.description
         if request.description is not None:
-            currrent_description = request.description
+            current_description = request.description
 
-        self.repository.update(
-            Category(name=current_name, description=currrent_description)
-        )
+        category.update_category(name=current_name, description=current_description)
+
+        if request.is_active is True:
+            category.activate()
+        elif request.is_active is False:
+            category.deactivate()
+
+        category.validate()
+
+        self.repository.update(category)

@@ -17,3 +17,8 @@ class InMemoryCategoryRepository(CategoryRepository):
 
     def delete(self, id: UUID) -> None:
         self.categories.remove(self.get_by_id(id))
+
+    def update(self, category: Category) -> None:
+        if old_category := self.get_by_id(category.id):
+            self.categories.remove(old_category)
+            self.categories.append(category)

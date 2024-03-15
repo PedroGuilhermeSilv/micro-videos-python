@@ -28,6 +28,7 @@ class CreateCategory:
                 description=request.description,
                 is_active=request.is_active,
             )
+            category.validate()
         except ValueError as err:
             raise InvalidCategoryData(str(err)) from err
         self.repository.save(category)
