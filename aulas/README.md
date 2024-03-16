@@ -69,6 +69,7 @@
 
 ## Pesquisar
 - Verificar a diferença de MagickMock para create_autospec
+- List  comprehension
 
 
 ## TDD

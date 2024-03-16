@@ -1,4 +1,5 @@
 from uuid import UUID
+
 from src.core.category.domain.category import Category
 from src.core.category.application.category_repository import CategoryRepository
 
@@ -22,3 +23,6 @@ class InMemoryCategoryRepository(CategoryRepository):
         if old_category := self.get_by_id(category.id):
             self.categories.remove(old_category)
             self.categories.append(category)
+
+    def list(self) -> list[Category]:
+        return list(self.categories)
