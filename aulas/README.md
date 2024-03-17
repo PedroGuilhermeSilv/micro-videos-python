@@ -31,12 +31,12 @@
 - [x] #A2407
 - [x] #A2408
 - [x] #A2409
-- [ ] #A2410
-- [ ] #A2411
-- [ ] #A2412
-- [ ] #A2413
-- [ ] #A2414
-- [ ] #A2415
+- [x] #A2410
+- [x] #A2411
+- [x] #A2412
+- [x] #A2413
+- [x] #A2414
+- [x] #A2415
 - [ ] #A2416
 - [ ] #A2417
 - [ ] #A2418
@@ -68,8 +68,21 @@
 # Anotações:
 
 ## Pesquisar
-- Verificar a diferença de MagickMock para create_autospec
-- List  comprehension
+- Verificar a diferença de MagickMock para create_autospec:
+    - MagicMock:
+        - MagicMock é uma classe que cria objetos que respondem a qualquer chamada ou atribuição de atributo, retornando sempre um novo MagicMock. Isso significa que você pode chamar métodos e atributos inexistentes sem causar exceções.
+        É útil quando você precisa de um objeto simulado que pode ser usado de forma flexível em muitos contextos diferentes.
+
+    - create_autospec:
+        - create_autospec é uma função que cria um objeto simulado com base em um objeto real, mas apenas copia a assinatura (métodos e atributos) do objeto real, substituindo as implementações por MagicMock por padrão.
+        Ao contrário do MagicMock, create_autospec verifica se o objeto simulado se comporta exatamente como o objeto real. Isso significa que ele levantará uma exceção se você tentar chamar métodos ou atributos inexistentes no objeto real.
+- List comprehension:
+    - List comprehension é uma forma concisa e elegante de criar listas em Python. Ele permite que você crie uma lista derivada de outra lista existente aplicando uma expressão a cada item dessa lista. A estrutura básica de uma list comprehension é:
+    ``` 
+    numeros = [1, 2, 3, 4, 5]
+    quadrados = [x**2 for x in numeros]
+    print(quadrados)  # Saída: [1, 4, 9, 16, 25]
+    ```
 
 
 ## TDD
@@ -91,4 +104,17 @@
 - [x] Tes __repr__
 - [x] Deve permitir a alteração da categoria informando o nome e a descrição
 - [X] Deve permitir ativar e desativar uma categoria
+
+
+## Metas:
+- Fazer um tutorial da documentação do Django por dia.
+### Primeiros passos
+- [ ] Parte 1: Requisições e respostas
+- [ ] Parte 2: Modelos e o site Admin 
+- [ ] Parte 3: Views e templates 
+- [ ] Parte 4: Forms e views genéricas
+- [ ] Parte 5: Testes 
+- [ ] Parte 6: Arquivos estáticos 
+- [ ] Parte 7: Personalizando o site admin 
+- [ ] Como escrever aplicações reutilizáveis | Escrevendo seu primeiro patch para o Django
 
