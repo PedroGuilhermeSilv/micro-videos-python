@@ -37,10 +37,10 @@
 - [x] #A2413
 - [x] #A2414
 - [x] #A2415
-- [ ] #A2416
-- [ ] #A2417
-- [ ] #A2418
-- [ ] #A2419
+- [x] #A2416
+- [x] #A2417
+- [x] #A2418
+- [x] #A2419
 - [ ] #A2420
 - [ ] #A2421
 - [ ] #A2422
@@ -83,6 +83,8 @@
     quadrados = [x**2 for x in numeros]
     print(quadrados)  # Saída: [1, 4, 9, 16, 25]
     ```
+
+- pytest.mark.django_db
 
 
 ## TDD

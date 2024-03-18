@@ -8,6 +8,7 @@ RUN apt update && apt-get upgrade && apt install -y --no-install-recommends \
     curl \
     wget \
     fonts-powerline \
+    sqlite3 \
     && apt-get clean 
 
 RUN useradd -ms /bin/bash python

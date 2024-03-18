@@ -7,7 +7,7 @@ from src.core.category.application.use_cases.get_category import (
     GetCategory,
 )
 from src.core.category.domain.category import Category
-from src.core.category.application.category_repository import CategoryRepository
+from core.category.domain.category_repository import CategoryRepository
 
 
 class TestGetCategoryById:
