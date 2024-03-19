@@ -1,6 +1,6 @@
 import uuid
 from src.core.category.domain.category import Category
-from django_project.category_app.repository import DjangoORMCategoryRespository
+from django_project.category_app.repository import DjangoORMCategoryRepository
 from django_project.category_app.models import Category as CategoryModel
 import pytest
 
@@ -13,7 +13,7 @@ class TestSave:
             description="Category 1 description",
             is_active=True,
         )
-        repository = DjangoORMCategoryRespository(CategoryModel)
+        repository = DjangoORMCategoryRepository(CategoryModel)
         assert CategoryModel.objects.count() == 0
 
         repository.save(category)
@@ -33,7 +33,7 @@ class TestGetById:
             description="Category 1 description",
             is_active=True,
         )
-        repository = DjangoORMCategoryRespository(CategoryModel)
+        repository = DjangoORMCategoryRepository(CategoryModel)
         category_orm = CategoryModel.objects.create(
             name=category.name,
             description=category.description,
@@ -49,7 +49,7 @@ class TestGetById:
 
     def test_get_category_by_id_not_found(self):
         id_not_found = uuid.uuid4()
-        repository = DjangoORMCategoryRespository(CategoryModel)
+        repository = DjangoORMCategoryRepository(CategoryModel)
         category_db = repository.get_by_id(id=id_not_found)
 
         assert category_db is None
@@ -63,7 +63,7 @@ class TestDelete:
             description="Category 1 description",
             is_active=True,
         )
-        repository = DjangoORMCategoryRespository(CategoryModel)
+        repository = DjangoORMCategoryRepository(CategoryModel)
         category_orm = CategoryModel.objects.create(
             name=category.name,
             description=category.description,
@@ -90,7 +90,7 @@ class TestList:
             description="Category 2 description",
             is_active=True,
         )
-        repository = DjangoORMCategoryRespository(CategoryModel)
+        repository = DjangoORMCategoryRepository(CategoryModel)
         category_orm_1 = CategoryModel.objects.create(
             name=category_1.name,
             description=category_1.description,
@@ -123,7 +123,7 @@ class TestUpdate:
             description="Category 1 description",
             is_active=True,
         )
-        repository = DjangoORMCategoryRespository(CategoryModel)
+        repository = DjangoORMCategoryRepository(CategoryModel)
         category_orm = CategoryModel.objects.create(
             name=category.name,
             description=category.description,
