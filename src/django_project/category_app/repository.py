@@ -48,5 +48,8 @@ class DjangoORMCategoryRepository(CategoryRepository):
 
     def update(self, category) -> None:
         if old_category := self.get_by_id(category.id):
-            self.delete(old_category.id)
-            self.save(category)
+            CategoryModel.objects.filter(id=old_category.id).update(
+                name=category.name or old_category.name,
+                description=category.description or old_category.description,
+                is_active=category.is_active if category.is_active is not None else old_category.is_active,
+            )

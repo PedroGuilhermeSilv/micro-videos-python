@@ -19,10 +19,11 @@ from rest_framework import status
 from django_project.category_app.repository import DjangoORMCategoryRepository
 from django_project.category_app.models import Category as CategoryModel
 from django_project.category_app.serializers import (
-    CategoryRequestSerializer,
+    CreateCategoryRequestSerializer,
     ListCategoryResponseSerializer,
     RetrieveCategoryRequestSerializer,
     RetrieveCategoryResponseSerializer,
+    CreateCategoryResponseSerializer,
 )
 
 
@@ -54,17 +55,18 @@ class CategoryViewSet(viewsets.ViewSet):
         return Response(status=status.HTTP_200_OK, data=response)
 
     def create(self, request: Request) -> Response:
-        serializer = CategoryRequestSerializer(data=request)
+        serializer = CreateCategoryRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         try:
             use_case = CreateCategory(
-                repository=DjangoORMCategoryRepository(CategoryModel)
+                repository=DjangoORMCategoryRepository(category_model=CategoryModel)
             )
             result = use_case.execute(
                 CategoryCreateRequest(**serializer.validated_data)
             )
+            response = CreateCategoryResponseSerializer(instance=result)
         except CategoryNotFound:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        return Response(status=status.HTTP_201_CREATED, data=result.data)
+        return Response(status=status.HTTP_201_CREATED, data=response.data)

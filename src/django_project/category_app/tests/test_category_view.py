@@ -1,4 +1,8 @@
 import uuid
+from src.core.category.application.use_cases.get_category import (
+    CategoryGetRequest,
+    GetCategory,
+)
 from src.core.category.domain.category import Category
 from django_project.category_app.repository import DjangoORMCategoryRepository
 from django_project.category_app.models import Category as CategoryModel
@@ -76,6 +80,29 @@ class TestRetrieveAPI:
         response = APIClient().get("/api/categories/1/")
 
         assert response.status_code == 400
+
+    def test_return_201_when_payload_is_valid(
+        self, category_repository: DjangoORMCategoryRepository
+    ):
+        use_case = GetCategory(repository=category_repository)
+        response = APIClient().post(
+            "/api/categories/",
+            data={
+                "name": "Category 1",
+                "description": "Description 1",
+                "is_active": True,
+            },
+        )
+        assert response.status_code == 201
+        assert response.data == {
+            "id": response.data["id"],
+        }
+
+        category = use_case.execute(request=CategoryGetRequest(id=response.data["id"]))
+
+        assert category.name == "Category 1"
+        assert category.description == "Description 1"
+        assert category.is_active is True
 
     def test_return_category_when_exists(
         self,

@@ -8,10 +8,14 @@ class CategoryResponseSerializer(serializers.Serializer):
     is_active = serializers.BooleanField()
 
 
-class CategoryRequestSerializer(serializers.Serializer):
+class CreateCategoryRequestSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255)
-    description = serializers.CharField()
-    is_active = serializers.BooleanField()
+    description = serializers.CharField(required=False)
+    is_active = serializers.BooleanField(required=False)
+
+
+class CreateCategoryResponseSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
 
 
 class ListCategoryResponseSerializer(serializers.Serializer):

@@ -124,23 +124,20 @@ class TestUpdate:
             is_active=True,
         )
         repository = DjangoORMCategoryRepository(CategoryModel)
-        category_orm = CategoryModel.objects.create(
-            name=category.name,
-            description=category.description,
-            is_active=category.is_active,
-        )
 
+        repository.save(category)
+        category_db = repository.get_by_id(category.id)
+        assert category_db.name == "Category 1"
+        assert category_db.description == "Category 1 description"
+        assert category_db.is_active is True
         assert CategoryModel.objects.count() == 1
 
         category.name = "Category 1 Updated"
         category.description = "Category 1 description updated"
         category.is_active = False
-        category.id = category_orm.id
-
         repository.update(category)
 
-        category_db = repository.get_by_id(category_orm.id)
-
+        category_db = repository.get_by_id(category_db.id)
         assert category_db.name == "Category 1 Updated"
         assert category_db.description == "Category 1 description updated"
         assert category_db.is_active is False
