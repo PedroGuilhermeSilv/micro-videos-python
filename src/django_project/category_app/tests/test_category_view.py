@@ -22,7 +22,7 @@ def category_repository() -> DjangoORMCategoryRepository:
 
 
 @pytest.mark.django_db
-class TestCategoryAPI:
+class TestListAPI:
     def test_list_category(
         self,
         category_movie: Category,
@@ -34,39 +34,40 @@ class TestCategoryAPI:
         repository.save(category_movie)
 
         response = APIClient().get("/api/categories/")
-        assert response.data == [
-            {
-                "id": str(category_serie.id),
-                "name": category_serie.name,
-                "description": category_serie.description,
-                "is_active": category_serie.is_active,
-            },
-            {
-                "id": str(category_movie.id),
-                "name": category_movie.name,
-                "description": category_movie.description,
-                "is_active": category_movie.is_active,
-            },
-        ]
+        assert response.data == {
+            "data": [
+                {
+                    "id": str(category_serie.id),
+                    "name": category_serie.name,
+                    "description": category_serie.description,
+                    "is_active": category_serie.is_active,
+                },
+                {
+                    "id": str(category_movie.id),
+                    "name": category_movie.name,
+                    "description": category_movie.description,
+                    "is_active": category_movie.is_active,
+                },
+            ]
+        }
         assert response.status_code == 200
-        assert response.data == [
-            {
-                "id": str(category_serie.id),
-                "name": category_serie.name,
-                "description": category_serie.description,
-                "is_active": category_serie.is_active,
-            },
-            {
-                "id": str(category_movie.id),
-                "name": category_movie.name,
-                "description": category_movie.description,
-                "is_active": category_movie.is_active,
-            },
-        ]
+
+        assert len(response.data["data"]) == 2
 
 
 @pytest.mark.django_db
 class TestRetrieveAPI:
+    def test_when_payload_is_invalid_then_return_400(self):
+        response = APIClient().post(
+            "/api/categories/",
+            data={
+                "name": "",
+                "description": "description",
+                "is_active": True,
+            },
+        )
+
+        assert response.status_code == 400
 
     def test_return_400_when_id_is_invalid(
         self,
@@ -90,10 +91,12 @@ class TestRetrieveAPI:
 
         assert response.status_code == 200
         assert response.data == {
-            "id": str(category_movie.id),
-            "name": category_movie.name,
-            "description": category_movie.description,
-            "is_active": category_movie.is_active,
+            "data": {
+                "id": str(category_movie.id),
+                "name": category_movie.name,
+                "description": category_movie.description,
+                "is_active": category_movie.is_active,
+            }
         }
 
     def test_return_404_when_category_not_exists(
