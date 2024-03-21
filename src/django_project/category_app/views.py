@@ -1,3 +1,11 @@
+from src.core.category.application.use_cases.delete_category import (
+    DeleteCategory,
+    DeleteCategoryRequest,
+)
+from src.core.category.application.use_cases.update_category import (
+    CategoryUpdateRequest,
+    UpdateCategory,
+)
 from src.core.category.application.use_cases.create_category import (
     CategoryCreateRequest,
     CreateCategory,
@@ -24,6 +32,8 @@ from django_project.category_app.serializers import (
     RetrieveCategoryRequestSerializer,
     RetrieveCategoryResponseSerializer,
     CreateCategoryResponseSerializer,
+    UpdateCategoryRequestSerializer,
+    DeleteCategoryRequestSerializer,
 )
 
 
@@ -70,3 +80,40 @@ class CategoryViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_201_CREATED, data=response.data)
+
+    def update(self, request: Request, pk=None) -> Response:
+        serializer = UpdateCategoryRequestSerializer(
+            data={
+                **request.data,
+                "id": pk,
+            }
+        )
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            use_case = UpdateCategory(
+                repository=DjangoORMCategoryRepository(category_model=CategoryModel)
+            )
+            use_case.execute(CategoryUpdateRequest(**serializer.validated_data))
+        except CategoryNotFound:
+            return Response(status=status.HTTP_404_NOT_FOUND, data="Category not found")
+
+        return Response(
+            status=status.HTTP_204_NO_CONTENT, data="Category updated successfully"
+        )
+
+    def delete(self, request: Request, pk=None) -> Response:
+        serializer = DeleteCategoryRequestSerializer(data={"id": pk})
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            use_case = DeleteCategory(
+                repository=DjangoORMCategoryRepository(category_model=CategoryModel)
+            )
+            use_case.execute(DeleteCategoryRequest(id=serializer.validated_data["id"]))
+        except CategoryNotFound:
+            return Response(status=status.HTTP_404_NOT_FOUND, data="Category not found")
+
+        return Response(
+            status=status.HTTP_204_NO_CONTENT, data="Category deleted successfully"
+        )
