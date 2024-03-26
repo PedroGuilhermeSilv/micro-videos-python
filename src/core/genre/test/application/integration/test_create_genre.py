@@ -1,21 +1,14 @@
+
+
+
 import uuid
-
-
+from src.core.genre.application.use_cases.exceptions import RelatedCategoriesNotFound
+from src.core.genre.application.use_cases.create_genre import CreateGenre, CreateGenreRequest
 from src.core.genre.infra.in_memory_genre import InMemoryGenreRepository
-
 from src.core.category.infra.in_memory_category import InMemoryCategoryRepository
-
-import pytest
-
-from src.core.category.domain.category import Category
 from src.core.category.domain.category_repository import CategoryRepository
-from src.core.genre.application.use_cases.create_genre import (
-    CreateGenre,
-    CreateGenreRequest,
-)
-from src.core.genre.application.use_cases.exceptions import (
-    RelatedCategoriesNotFound,
-)
+import pytest
+from src.core.category.domain.category import Category
 
 
 @pytest.fixture
