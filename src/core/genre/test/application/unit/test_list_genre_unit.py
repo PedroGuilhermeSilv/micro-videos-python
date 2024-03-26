@@ -8,11 +8,14 @@ from src.core.genre.application.genre_repository import GenreRepository
 
 import pytest
 
+
 @pytest.fixture
 def mock_empty_genre_repository() -> GenreRepository:
     repository = create_autospec(GenreRepository)
     repository.list.return_value = ListGenreResponse(data=[])
     return repository
+
+
 class TestListGenre:
     def test_when_list_genre_is_empty(
         self,
@@ -22,8 +25,6 @@ class TestListGenre:
         response = repository.list()
 
         assert response == ListGenreResponse(data=[])
-
-
 
     def test_when_list_genre_has_not_category(
         self,
@@ -37,5 +38,3 @@ class TestListGenre:
         response = repository.list()
 
         assert response == ListGenreResponse(data=[genre])
-
-  

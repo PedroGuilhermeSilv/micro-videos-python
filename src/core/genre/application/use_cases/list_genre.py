@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass
 from uuid import UUID
 from src.core.genre.application.genre_repository import GenreRepository
@@ -34,5 +33,3 @@ class ListGenre:
                 for genre in genres
             ]
         )
-
-    

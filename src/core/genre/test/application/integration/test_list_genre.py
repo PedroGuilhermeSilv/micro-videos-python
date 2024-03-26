@@ -1,4 +1,8 @@
-from src.core.genre.application.use_cases.list_genre import GenreResponse, ListGenre, ListGenreResponse
+from src.core.genre.application.use_cases.list_genre import (
+    GenreResponse,
+    ListGenre,
+    ListGenreResponse,
+)
 from src.core.genre.domain.genre import Genre
 from src.core.category.infra.in_memory_category import InMemoryCategoryRepository
 from src.core.genre.infra.in_memory_genre import InMemoryGenreRepository
@@ -15,7 +19,7 @@ class TestListGenre:
 
         documentary_category = Category(name="Documentary")
         repository_category.save(documentary_category)
-        
+
         genre = Genre(
             name="Action",
             categories={movie_category.id, documentary_category.id},
@@ -38,10 +42,8 @@ class TestListGenre:
 
     def test_list_genres_with_not_categories(self):
         repository_genre = InMemoryGenreRepository()
-        
-        genre = Genre(
-            name="Action"
-        )
+
+        genre = Genre(name="Action")
         repository_genre.save(genre)
 
         use_case = ListGenre(repository=repository_genre)
@@ -57,4 +59,3 @@ class TestListGenre:
                 )
             ]
         )
-
