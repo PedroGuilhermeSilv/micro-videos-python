@@ -19,3 +19,7 @@ class GenreRepository(ABC):
     @abstractmethod
     def update(self, genre: Genre) -> None:
         raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, id: UUID) -> None:
+        raise NotImplementedError
