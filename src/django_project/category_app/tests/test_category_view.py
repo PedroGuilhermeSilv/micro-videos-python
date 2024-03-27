@@ -2,8 +2,8 @@ import json
 import uuid
 
 from src.core.category.domain.category import Category
-from django_project.category_app.repository import DjangoORMCategoryRepository
-from django_project.category_app.models import Category as CategoryModel
+from src.django_project.category_app.repository import DjangoORMCategoryRepository
+from src.django_project.category_app.models import Category as CategoryModel
 from rest_framework.test import APIClient
 import pytest
 
