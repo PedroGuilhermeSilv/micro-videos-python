@@ -174,10 +174,10 @@ class TestDelete:
     ):
         response = APIClient().delete("/api/genres/1/")
 
-        assert response.status_code == 404
+        assert response.status_code == 400
 
     def test_raise_when_genre_not_exists(self):
-        response = APIClient().delete(f"/api/genres/{uuid.uuid4()}")
+        response = APIClient().delete(f"/api/genres/{uuid.uuid4()}/")
 
         assert response.status_code == 404
 

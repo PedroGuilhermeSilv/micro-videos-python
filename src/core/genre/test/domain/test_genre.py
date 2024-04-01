@@ -26,7 +26,7 @@ class TestCreateGenre:
 
     def test_str_is_correct(self):
         genre = Genre(name="Romance", is_active=True)
-        assert str(genre) == "Genre: Romance - True"
+        assert str(genre) == f"Genre: Romance - True - {genre.id} - set()"
 
 
 class TestChangeNameGenre:
