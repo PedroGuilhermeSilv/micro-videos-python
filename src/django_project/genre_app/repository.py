@@ -44,15 +44,17 @@ class DjangoORMGenreRepository(GenreRepository):
     def update(self, genre: Genre) -> None:
         try:
             genre_model = self.genre_model.objects.get(id=genre.id)
+
         except self.genre_model.DoesNotExist:
             return None
 
-        with transaction.atomic():
-            self.genre_model.objects.filter(id=genre.id).update(
-                name=genre.name,
-                is_active=genre.is_active,
-            )
-            genre_model.categories.set(genre.categories)
+        else:
+            with transaction.atomic():
+                self.genre_model.objects.filter(id=genre.id).update(
+                    name=genre.name,
+                    is_active=genre.is_active,
+                )
+                genre_model.categories.set(genre.categories)
 
     def delete(self, id: UUID) -> None:
         self.genre_model.objects.filter(id=id).delete()

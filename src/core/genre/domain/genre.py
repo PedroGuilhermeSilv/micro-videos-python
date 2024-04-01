@@ -21,7 +21,7 @@ class Genre:
 
     def __str__(self) -> str:
         return (
-            f"Genre: {self.name} - {self.is_active}"
+            f"Genre: {self.name} - {self.is_active} - {self.id} - {self.categories}"
         )
 
     def __repr__(self):

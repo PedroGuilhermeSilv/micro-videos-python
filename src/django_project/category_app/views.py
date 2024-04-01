@@ -102,7 +102,7 @@ class CategoryViewSet(viewsets.ViewSet):
             status=status.HTTP_204_NO_CONTENT, data="Category updated successfully"
         )
 
-    def delete(self, request: Request, pk=None) -> Response:
+    def destroy(self, request: Request, pk=None) -> Response:
         serializer = DeleteCategoryRequestSerializer(data={"id": pk})
         serializer.is_valid(raise_exception=True)
 

@@ -39,7 +39,8 @@ class UpdateGenre:
                     f"Categories not found: {request.categories - categories_ids}"
                 )
 
-        Genre(
+        genre = Genre(
+            id=genre.id,
             name=request.name if request.name is not None else genre.name,
             is_active=request.is_active
             if request.is_active is not None
@@ -48,5 +49,4 @@ class UpdateGenre:
             if request.categories is not None
             else genre.categories,
         )
-
         self.repository.update(genre)

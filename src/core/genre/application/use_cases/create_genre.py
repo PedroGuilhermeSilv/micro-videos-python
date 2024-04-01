@@ -45,6 +45,6 @@ class CreateGenre:
                 categories=request.categories,
             )
             self.repository.save(genre)
-        except ValueError as err:
+        except Exception as err:
             raise InvalidGenre(err) from err
         return CreateGenreResponse(id=genre.id)

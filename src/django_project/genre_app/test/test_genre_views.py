@@ -1,3 +1,5 @@
+import json
+import uuid
 from rest_framework import status
 from src.django_project.category_app.repository import DjangoORMCategoryRepository
 from src.django_project.category_app.models import Category as CategoryModel
@@ -89,6 +91,7 @@ class TestListAPI:
         #         },
         #     ]
         # }
+        # assert response.data == expected_response
 
         assert response.data["data"][0]["id"] == str(genre_romance.id)
         assert response.data["data"][0]["name"] == genre_romance.name
@@ -102,4 +105,160 @@ class TestListAPI:
         assert response.data["data"][1]["name"] == genre_drama.name
         assert response.data["data"][1]["is_active"] == genre_drama.is_active
         assert response.data["data"][1]["categories"] == []
-        # assert response.data == expected_response
+
+
+@pytest.mark.django_db
+class TestCreateAPI:
+    def test_create_genre_with_categories_associated(
+        self,
+        category_repository,
+        category_documentary,
+        category_movie,
+        genre_repository: DjangoORMGenreRepository,
+    ):
+        response = APIClient().post(
+            "/api/genres/",
+            data={
+                "name": "Romance",
+                "is_active": True,
+                "categories": [str(category_movie.id), str(category_documentary.id)],
+            },
+        )
+
+        assert response.status_code == 201
+        assert response.data["id"]
+
+        genre_saved = genre_repository.get_by_id(response.data["id"])
+        assert genre_saved.name == "Romance"
+        assert genre_saved.is_active is True
+        assert genre_saved.categories == {category_movie.id, category_documentary.id}
+
+    def test_create_genre_without_categories_associated(
+        self, genre_repository: DjangoORMGenreRepository
+    ):
+        response = APIClient().post(
+            "/api/genres/",
+            data={
+                "name": "Romance",
+                "is_active": True,
+                "categories": [],
+            },
+        )
+
+        assert response.status_code == 201
+        assert response.data["id"]
+
+        genre_saved = genre_repository.get_by_id(response.data["id"])
+        assert genre_saved.name == "Romance"
+        assert genre_saved.is_active is True
+        assert genre_saved.categories == set()
+
+    def test_raise_error_when_genre_is_invalid(self):
+        response = APIClient().post(
+            "/api/genres/",
+            data={
+                "name": "",
+                "is_active": True,
+                "categories": [],
+            },
+        )
+
+        assert response.status_code == 400
+        assert response.data == {"name": ["This field may not be blank."]}
+
+
+@pytest.mark.django_db
+class TestDelete:
+    def test_raise_when_id_not_valid(
+        self,
+    ):
+        response = APIClient().delete("/api/genres/1/")
+
+        assert response.status_code == 404
+
+    def test_raise_when_genre_not_exists(self):
+        response = APIClient().delete(f"/api/genres/{uuid.uuid4()}")
+
+        assert response.status_code == 404
+
+    def test_delete_genre(self, genre_romance, genre_repository):
+        genre_repository.save(genre_romance)
+
+        assert GenreModel.objects.count() == 1
+
+        response = APIClient().delete(f"/api/genres/{genre_romance.id}/")
+
+        assert response.status_code == 204
+
+        assert GenreModel.objects.count() == 0
+
+
+@pytest.mark.django_db
+class TestUpdatedAPI:
+    def test_update_genre_with_categories_associated(
+        self,
+        category_repository,
+        category_documentary,
+        category_movie,
+        genre_drama,
+        genre_repository: DjangoORMGenreRepository,
+    ):
+        genre_repository.save(genre_drama)
+
+        genre_saved = genre_repository.get_by_id(genre_drama.id)
+        assert genre_saved.name == "Drama"
+        assert genre_saved.is_active is True
+        assert genre_saved.categories == set()
+
+        response = APIClient().put(
+            f"/api/genres/{genre_drama.id}/",
+            content_type="application/json",
+            data=json.dumps(
+                {
+                    "name": "Drama updated",
+                    "is_active": False,
+                    "categories": [
+                        str(category_movie.id),
+                        str(category_documentary.id),
+                    ],
+                }
+            ),
+        )
+
+        assert response.status_code == 204
+
+        genre_updated = genre_repository.get_by_id(genre_drama.id)
+        assert genre_updated.name == "Drama updated"
+        assert genre_updated.is_active is False
+        assert genre_updated.categories == {category_movie.id, category_documentary.id}
+
+    def test_return_404_when_genre_not_exists(self):
+        response = APIClient().put(
+            f"/api/genres/{uuid.uuid4()}/",
+            content_type="application/json",
+            data=json.dumps(
+                {
+                    "name": "Drama updated",
+                    "is_active": False,
+                    "categories": [],
+                }
+            ),
+        )
+
+        assert response.status_code == 404
+
+    def test_return_400_when_payload_is_invalid(self):
+        response = APIClient().put(
+            f"/api/genres/{uuid.uuid4()}/",
+            content_type="application/json",
+            data=json.dumps(
+                {
+                    "name": "",
+                    "is_active": False,
+                    "categories": [],
+                }
+            ),
+        )
+
+        assert response.status_code == 400
+        assert response.data == {"name": ["This field may not be blank."]}
