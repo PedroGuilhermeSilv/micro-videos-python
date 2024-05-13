@@ -45,8 +45,8 @@ class TestSave:
 
         assert GenreModel.objects.count() == 1
         assert genre_saved.categories.count() == 2
-        assert genre_saved.categories.all()[0].name == "category2"
-        assert genre_saved.categories.all()[1].name == "category1"
+        assert genre_saved.categories.all()[0].name == "category1"
+        assert genre_saved.categories.all()[1].name == "category2"
 
 
 @pytest.mark.django_db
